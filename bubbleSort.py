@@ -1,13 +1,10 @@
 
-
-from time import sleep
-
-
 def bubble_sort(objectList: list[object]) -> None:
+    """Implementation of bubblesort in a way that the progress can be vizualized."""
     
     for index, object in enumerate(objectList):
 
-        object.set_selected(True)
+        # object.set_selected(True)
 
         if index + 1 == len(objectList):
             break
@@ -17,5 +14,5 @@ def bubble_sort(objectList: list[object]) -> None:
             object.swap_rectangle_coordinates(objectList[index + 1])
             object.swap_object_list(objectList, index, index + 1)
         
-        object.set_selected(False)
+        # object.set_selected(False)
 

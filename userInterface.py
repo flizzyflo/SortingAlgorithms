@@ -1,68 +1,50 @@
-from time import sleep
+
 from typing import Callable
 from bubbleSort import bubble_sort
 from insertionSort import insertionSort
 from mergeSort import mergeSort
-from valueBarChart import *
+from valueObjects import *
 from tkinter import *
 from tkinter import ttk
 
 COLUMSPAN = 5
-global counter
-global colour
-colour = "red"
-counter = 0
 
 
 def delete_rectangles_ui(objectsList: object, tag: str):
+    """Function to delete all rectangle items presented on the screen."""
+
     for object in objectsList:
         object.canvas_Object.delete(tag)
 
-def create_rectangle_object(values: list) -> list[object]: 
-    return [ValueBarChart(number) for number in values]
+
+def createValueObjects(values: list) -> list[object]:
+    """Creates a list of valueObjects, which contain values and coordinates within the canvas."""
+
+    return [valueObjects(number) for number in values]
+
 
 def display_rectangles_ui(objectsList: list[object]):
-    x1, y1, x2 = 5, 5, 15 
+    """Function to create and display the rectangles."""
+
+    x1, x2 = 5, 15 
     for object in objectsList:
             object.create_rect(x1, 260 - object.get_Value(), x2, 260)
             x1 += 15
             x2 += 15
 
-def print_rect_values(objectsList: list[object]) -> None:
-    print([f"{item}" for item in objectsList])
 
-def change_color(comparable_one: object, comparable_two: object):
+def move_rectangle(originalItem: object, valueObjectToCompare: object) -> None:
+    """Function to move the graphical presentation of the rectangles and switch positions.
+    Used to visualize the sorting process."""
 
-    if comparable_one.compare_rectangle_values(comparable_two):
-        comparable_one.move_rectangle(comparable_two)
-        
-    else:
-        comparable_one.canvas_Object.itemconfig(comparable_one.rect, fill="green")
-
-def move_rectangle(InitialItem: object, ValueBarChartComparable: object) -> None:
-        InitialItem.swap_rectangle_coordinates(ValueBarChartComparable)
-        movement_amount = InitialItem.get_movement_amount(ValueBarChartComparable)
-        InitialItem.canvas_Object.move(InitialItem.rect, movement_amount, 0)
-        ValueBarChartComparable.canvas_Object.move(ValueBarChartComparable.rect, -movement_amount, 0)
+    originalItem.swap_rectangle_coordinates(valueObjectToCompare)
+    movement_amount = originalItem.get_movement_amount(valueObjectToCompare)
+    originalItem.canvas_Object.move(originalItem.rect, movement_amount, 0)
+    valueObjectToCompare.canvas_Object.move(valueObjectToCompare.rect, -movement_amount, 0)
  
-def runThroughObjects(objectsList: list[object]):
-    global counter, colour
-
-    if counter == 0:
-        objectsList[len(objectsList) - 1].canvas_Object.itemconfig(objectsList[len(objectsList) - 1].rect, fill="#40E0D0")
-
-    if counter > 0:
-        objectsList[counter - 1].canvas_Object.itemconfig(objectsList[counter - 1].rect, fill="#40E0D0")
-
-    objectsList[counter].canvas_Object.itemconfig(objectsList[counter].rect, fill=colour)
-    counter += 1
-
-    if counter == len(objectsList):
-        counter = 0
-        colour = "blue"
-
 
 def initialize_search(canvasItem: object, objectsList: list[object], searchAlgorithm: Callable):
+    """Wrapper function to call several sub functions which initialize the search process."""
 
     try:
         delete_rectangles_ui(objectsList, "rect")
@@ -70,13 +52,15 @@ def initialize_search(canvasItem: object, objectsList: list[object], searchAlgor
     finally:
         display_rectangles_ui(objectsList)
         searchAlgorithm(objectsList)
-      
         canvasItem.after(125, lambda: initialize_search(canvasItem, objectsList, searchAlgorithm))
       
+
 def setUpUserInterface(objectsList: list[object]):
+    """Function to initially set up the whole visual presentation of the programm."""
+
     root = Tk()
     root.title("Search Algorithm Presentation")
-    root.geometry("1000x1000")
+    root.geometry("1000x300")
 
     frame_array = [Frame(root) for _ in range(2)]
     for i in range(len(frame_array)):

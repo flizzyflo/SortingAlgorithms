@@ -1,4 +1,5 @@
 
+# to be implemented
 
-def mergeSort():
+def mergeSort(objectList = list[object]) -> None:
     pass

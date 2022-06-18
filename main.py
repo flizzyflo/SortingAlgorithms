@@ -1,5 +1,6 @@
-from valueBarChart import *
+from valueObjects import *
 from userInterface import *
+from random import randint
 
 def create_random_values(min: int, max: int) -> list[int]:
     values = [] 
@@ -9,12 +10,11 @@ def create_random_values(min: int, max: int) -> list[int]:
     return values
 
 
-
-def main():
-    values = create_random_values(1, 67)
-    objects = create_rectangle_object(values)
-    setUpUserInterface(objects)
+def main(objectsList: list[object]):
+    setUpUserInterface(objectsList= objectsList)
 
 
 if __name__ == "__main__":
-    main()
+    values = create_random_values(1, 67)
+    objects = createValueObjects(values)
+    main(objectsList= objects)
