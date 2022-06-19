@@ -1,10 +1,6 @@
 
-from turtle import bgcolor
+
 from typing import Callable
-from BubbleSort import BubbleSort
-from InsertionSort import InsertionSort
-from MergeSort import MergeSort
-from QuickSort import QuickSort
 from ValueObjects import *
 from tkinter import *
 from tkinter import ttk
@@ -121,19 +117,20 @@ def setUpUserInterface(valueObjectList: list[object]):
                 command= lambda: deleteRectanglesUserInterface(valueObjectList, "rect"), 
                 text="Delete displayed values").grid(row= 0, column=1)
     ttk.Button(frame_array[0], 
-                command= lambda: initializeSearch(canv, valueObjectList, BubbleSort.bubbleSortObjects),
-                text="Start Bubble Sort").grid(row= 0, column= 2)
+                command= lambda: print("will be implemented soon"),
+                text="Start Bubble Sort",
+                state= DISABLED).grid(row= 0, column= 2)
     ttk.Button(frame_array[0], 
-                command= lambda: initializeSearch(canv, valueObjectList, InsertionSort.insertionSortObjects), 
+                command= lambda: print("will be implemented soon"), 
                 text="Start Insertion Sort", 
-                state= NORMAL).grid(row= 0, column= 3)
+                state= DISABLED).grid(row= 0, column= 3)
     ttk.Button(frame_array[0], 
-                command= lambda: initializeSearch(canv, valueObjectList, MergeSort.mergeSortObjects), 
+                command= lambda: print("will be implemented soon"), 
                 text="Start Merge Sort", 
-                state= NORMAL).grid(row= 0, column= 4)
+                state= DISABLED).grid(row= 0, column= 4)
     ttk.Button(frame_array[0], 
-                command= lambda: initializeSearch(canv, valueObjectList, QuickSort.quickSortObjects), 
+                command= lambda: print("will be implemented soon"), 
                 text="Start Quick Sort", 
-                state= NORMAL).grid(row= 0, column= 5)
+                state= DISABLED).grid(row= 0, column= 5)
 
     root.mainloop()

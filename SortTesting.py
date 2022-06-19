@@ -17,7 +17,7 @@ def testBubbleSort() -> bool:
 
     # Sort array with same values with BubbleSort.
     while BubbleSort.getTotalRuns() < len(BubbleSortArray):
-        BubbleSort.bubbleSortObjects(BubbleSortArray)
+        BubbleSort.bubbleSort(BubbleSortArray)
 
     # Set Class attribute to zero, to be able to perform bubble sort again.    
     BubbleSort.setTotalRuns(0)
