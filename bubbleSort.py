@@ -42,7 +42,7 @@ class BubbleSort:
         n = len(valueObjectList)
         for index, valueObject in enumerate(valueObjectList[:(n - 1)]):
 
-            if index + 1 == len(valueObjectList):
+            if index + 1 == n:
                 break
 
             if valueObject.getValue() > valueObjectList[index + 1].getValue():
