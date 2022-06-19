@@ -38,6 +38,7 @@ class BubbleSort:
 
     def bubbleSortObjects(valueObjectList: list[object]) -> None:
         """Implementation of bubblesort in a way that the progress can be vizualized."""
+
         n = len(valueObjectList)
         for index, valueObject in enumerate(valueObjectList[:(n - 1)]):
 
