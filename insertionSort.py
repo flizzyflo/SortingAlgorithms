@@ -1,6 +1,8 @@
 
 # to be implemented
+class InsertionSort:
 
-def insertionSort(objectList = list[object]) -> None:
-   pass
+   def insertionSortObjects(objectList = list[object]) -> None:
+      print("insertion Sort wird hier implementiert...")
+
  

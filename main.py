@@ -1,20 +1,18 @@
-from valueObjects import *
-from userInterface import *
-from random import randint
+from ValueObjects import *
+from UserInterface import *
+from SortTesting import *
 
-def create_random_values(min: int, max: int) -> list[int]:
-    values = [] 
-    for _ in range(min, max):
-        values.append(randint(1, 250))
+
+def main():
+
+    # for _ in range(1, 150):
+    #     testBubbleSort()
     
-    return values
+    randomValues: list = createNewRandomValues(RANDOM_SEED_START, RANDOM_SEED_END)
+    valueObjectList: list[object] = valueObjects.createValueObjects(randomValues)
 
-
-def main(objectsList: list[object]):
-    setUpUserInterface(objectsList= objectsList)
+    setUpUserInterface(valueObjectList= valueObjectList)
 
 
 if __name__ == "__main__":
-    values = create_random_values(1, 67)
-    objects = createValueObjects(values)
-    main(objectsList= objects)
+    main()
