@@ -33,4 +33,5 @@ def insertionSort(values: list[int], createRectangles: Callable, finalizeSearch:
          # Counter to move backwards within the array. If j == 0 is reached, the beginning of the array is reached and the while loop ends. 
          # Returns to the for loop, increases i, meaning grabbing the next value in the array and restart overall sorting.
 
-   finalizeSearch()
+   for index in range(len(values)):
+        finalizeSearch(index)

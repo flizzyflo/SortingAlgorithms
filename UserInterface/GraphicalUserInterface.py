@@ -21,6 +21,7 @@ class GraphicalUserInterface:
         self.root.title(ROOT_TITLE)
         self.root.geometry(GEOMETRY_MEASUREMENT)
 
+
         ttk.Label(self.root, 
                   text="Visualization of several sorting algoritms",
                   font=("Calibri", 18, "bold")).pack(pady=20)
@@ -111,14 +112,14 @@ class GraphicalUserInterface:
         self.createRectangles(self.values)
 
     
-    def colorizeBars(self, color: str = "green") -> None:
+    def colorizeBars(self, indexNumber:int, color: str = "green") -> None:
         
-        """Function to grab all items within the canvas and turn them into green color. This signalizes a succesful sort."""
+        """Function to change the color of an rectangle item within the canvas."""
 
-        for rectangle in self.rectangles:
-            self.canvas.itemconfig(rectangle, fill=color)
-  
-            var = IntVar()
-            self.root.after(10, lambda: var.set(1))
-            self.root.wait_variable(var)
+        
+        self.canvas.itemconfig(self.rectangles[indexNumber], fill=color)
+
+        var = IntVar()
+        self.root.after(10, lambda: var.set(1))
+        self.root.wait_variable(var)
          

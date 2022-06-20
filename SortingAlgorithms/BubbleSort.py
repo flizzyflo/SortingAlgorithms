@@ -31,5 +31,7 @@ def bubbleSort(values: list[int], createRectangles: Callable, finalizeSearch: Ca
                 
             else:
                 continue
- 
-    finalizeSearch()       
+    
+    for index in range(len(values)):
+        finalizeSearch(index)
+           
