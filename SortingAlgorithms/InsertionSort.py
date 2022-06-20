@@ -27,11 +27,11 @@ def insertionSort(values: list[int], createRectangles: Callable) -> None:
             values[backwardCounter], values[backwardCounter+1] = currentValue, values[backwardCounter]
             #values[backwardCounter+1] = temporaryValue
            
-            # createRectangles(values)
+            createRectangles(values)
+            # updates the GUI, according to the current values of the values list
          
+
+         backwardCounter -= 1
          # Counter to move backwards within the array. If j == 0 is reached, the beginning of the array is reached and the while loop ends. 
          # Returns to the for loop, increases i, meaning grabbing the next value in the array and restart overall sorting.
 
-         backwardCounter -= 1
-
-   createRectangles(values)

@@ -1,7 +1,6 @@
 
 import math
 
-from createRandomArray import *
 
 
 def splitArray(values: list[int]) -> list[int]:

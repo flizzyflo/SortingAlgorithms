@@ -19,7 +19,6 @@ def bubbleSort(values: list[int], createRectangles: Callable) -> None:
         for currentIndex, currentValue in enumerate(values):
             
             
-            # updates the GUI, according to the current values of the values list
             
             if (currentIndex + 1) > len(values) - 1:
                 continue
@@ -31,12 +30,13 @@ def bubbleSort(values: list[int], createRectangles: Callable) -> None:
                 values[currentIndex + 1] = currentValue
                 values[currentIndex] = temporary_object
                
-                # createRectangles(values)
+                createRectangles(values)
+               # updates the GUI, according to the current values of the values list
                 
             else:
                 continue
             
-    createRectangles(values)
+   
 
 
 
