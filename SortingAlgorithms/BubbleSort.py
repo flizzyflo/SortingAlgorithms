@@ -2,23 +2,19 @@
 from typing import Callable
 
 
-def bubbleSort(values: list[int], createRectangles: Callable) -> None:
+def bubbleSort(values: list[int], createRectangles: Callable, finalizeSearch: Callable) -> None:
 
     """Implementation of bubble sort. This sorting algorithm grabs a number an switches it with the next number, if the next one is less. The grabed number
     "marches" through the list until a number bigger than itself is found. With this bigger number, the process repeats again Finally, the biggest number 
     is at the end of the array and the process is repeated until the whole array is sorted. This algorithm works in-place and is stable."""
 
-
     if len(values) == 0:
       return
-
 
     for run in range(len(values)):
         # overall run through the entire values array
 
         for currentIndex, currentValue in enumerate(values):
-            
-            
             
             if (currentIndex + 1) > len(values) - 1:
                 continue
@@ -35,8 +31,5 @@ def bubbleSort(values: list[int], createRectangles: Callable) -> None:
                 
             else:
                 continue
-            
-   
-
-
-
+ 
+    finalizeSearch()       

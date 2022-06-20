@@ -1,13 +1,11 @@
 
-from random import randint
 from typing import Callable
 
 
-def insertionSort(values: list[int], createRectangles: Callable) -> None:
+def insertionSort(values: list[int], createRectangles: Callable, finalizeSearch: Callable) -> None:
 
    """Implementation of insertion sort. This approach compares a value with the former value. If the former value 
    is bigger than the current value, both are swapped. This algorithm works in-place and is stable."""      
-
 
    if len(values) == 0:
       return
@@ -35,3 +33,4 @@ def insertionSort(values: list[int], createRectangles: Callable) -> None:
          # Counter to move backwards within the array. If j == 0 is reached, the beginning of the array is reached and the while loop ends. 
          # Returns to the for loop, increases i, meaning grabbing the next value in the array and restart overall sorting.
 
+   finalizeSearch()

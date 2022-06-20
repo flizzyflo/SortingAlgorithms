@@ -1,8 +1,6 @@
 
 import math
 
-
-
 def splitArray(values: list[int]) -> list[int]:
     
     """Calculates a divider and splits the array in its half, returning a single value as soon as 
@@ -27,7 +25,6 @@ def mergeArrays(leftValuesArray: list[int], rightValuesArray: list[int]) -> list
 
     """Main merge sorting algorithm, which zips together both of the two seperate lists.
     Takes two already sorted arrays as input and puts them together."""
-
 
     resultArray = []
     lenghtLeftArray = len(leftValuesArray)
@@ -70,5 +67,3 @@ def mergeArrays(leftValuesArray: list[int], rightValuesArray: list[int]) -> list
 
   
     return resultArray
-
-

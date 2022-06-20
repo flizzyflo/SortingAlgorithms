@@ -22,17 +22,18 @@ class GraphicalUserInterface:
         self.root.geometry(GEOMETRY_MEASUREMENT)
 
         ttk.Label(self.root, 
-                  text="Visulization of several sorting algoritms",
-                  font=("Calibri", 14, "bold")).pack(pady=20)
+                  text="Visualization of several sorting algoritms",
+                  font=("Calibri", 18, "bold")).pack(pady=20)
                   
         frame_array: list = [Frame(self.root) for _ in range(2)]
         
         for i in range(len(frame_array)):
-            frame_array[i].pack(fill=BOTH)
+            frame_array[i].pack(anchor="center")
+        
         
         self.rectangles = []
 
-        self.canvas: object = Canvas(frame_array[1], bg= CANVAS_BACKGROUND_COLOR, width= CANVAS_WIDTH, height=CANVAS_HEIGHT)
+        self.canvas: object = Canvas(frame_array[1], bg= CANVAS_BACKGROUND_COLOR, width= CANVAS_WIDTH + 20, height=CANVAS_HEIGHT, relief= SUNKEN)
         self.canvas.pack(pady= 20)
         
 
@@ -42,15 +43,16 @@ class GraphicalUserInterface:
         ttk.Button(frame_array[0], 
                     text= "Start Bubble Sort",
                     state= NORMAL,
-                    command= lambda: bubbleSort(self.values, self.createRectangles)).grid(row= 0, column= 1)
+                    command= lambda: bubbleSort(self.values, self.createRectangles, self.colorizeBars)).grid(row= 0, column= 1)
         ttk.Button(frame_array[0], 
                     text= "Start Insertion Sort", 
                     state= NORMAL,
-                    command= lambda: insertionSort(self.values, self.createRectangles)).grid(row= 0, column= 2)
+                    command= lambda: insertionSort(self.values, self.createRectangles, self.colorizeBars)).grid(row= 0, column= 2)
         ttk.Button(frame_array[0], 
                     text= "Start Merge Sort", 
-                    state= NORMAL,
+                    state= DISABLED,
                     command= lambda: splitArray(self.values)).grid(row= 0, column= 3)
+
 
 
         self.root.mainloop()
@@ -61,9 +63,10 @@ class GraphicalUserInterface:
         """Deletes every item which is presented within the canvas widget."""
 
         self.canvas.delete(deletionTag)
+        self.rectangles.clear()
 
     
-    def createRectangles(self, values: list[int], initialStartingPosition: int = 3, rectangleTag: str = "all") -> None:
+    def createRectangles(self, values: list[int], initialStartingPosition: int = 3, rectangleTag: str = RECTANGLE_OBJECT_TAG) -> None:
 
         """Creates rectangles based on the values stored within the values list passed in as argument."""  
        
@@ -81,18 +84,21 @@ class GraphicalUserInterface:
                 x2Coordinate: int = x1Coordinate + barWidth
                 # setting x2 coordinate, basically the width of any bar. 
 
-                self.canvas.create_rectangle(x1Coordinate, 
+                self.rectangles.append(self.canvas.create_rectangle(x1Coordinate, 
                                             BAR_HEIGHT - (value // BAR_HEIGHT) + 10, 
                                             x2Coordinate, 
                                             BAR_HEIGHT, 
-                                            tags= "rectangles", 
-                                            fill="grey")
+                                            tags= rectangleTag, 
+                                            fill=RECTANGLE_COLOR))
                 
 
                 x1Coordinate = x2Coordinate + 2
                 # Updating starting coordinate for new bar ot the place next to the bar created before with a little gap of 2 between both bars
 
-            self.canvas.update_idletasks()
+            var = IntVar()
+            self.root.after(5, lambda: var.set(1))
+            self.root.wait_variable(var)
+
 
     
     def shuffleArray(self, values: list[int]) -> None:
@@ -104,3 +110,15 @@ class GraphicalUserInterface:
         self.deleteRectangles()
         self.createRectangles(self.values)
 
+    
+    def colorizeBars(self, color: str = "green") -> None:
+        
+        """Function to grab all items within the canvas and turn them into green color. This signalizes a succesful sort."""
+
+        for rectangle in self.rectangles:
+            self.canvas.itemconfig(rectangle, fill=color)
+  
+            var = IntVar()
+            self.root.after(10, lambda: var.set(1))
+            self.root.wait_variable(var)
+         
