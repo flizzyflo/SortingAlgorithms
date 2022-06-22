@@ -1,5 +1,7 @@
 
 import math
+
+
 from SortingAlgorithms.BubbleSort import bubbleSort
 from SortingAlgorithms.InsertionSort import insertionSort
 from SortingAlgorithms.MergeSort import splitArray
@@ -71,6 +73,12 @@ class GraphicalUserInterface:
 
         """Creates rectangles based on the values stored within the values list passed in as argument."""  
        
+
+        # for value in values:
+        #     Rectangle(value)
+
+
+
         try:
             # If rectagles already exist, try to delete them
             self.deleteRectangles(rectangleTag)
@@ -90,7 +98,7 @@ class GraphicalUserInterface:
                                             x2Coordinate, 
                                             BAR_HEIGHT, 
                                             tags= rectangleTag, 
-                                            fill=RECTANGLE_COLOR))
+                                            fill=INITIAL_RECTANGLE_COLOR))
                 
 
                 x1Coordinate = x2Coordinate + 2

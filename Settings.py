@@ -13,7 +13,7 @@ CANVAS_WIDTH:int = 1920
 CANVAS_HEIGHT:int = 1000
 BAR_HEIGHT:int = CANVAS_HEIGHT - 1
 
-RECTANGLE_COLOR: str = "#40E0D0"
+INITIAL_RECTANGLE_COLOR: str = "#40E0D0"
 RECTANGLE_OBJECT_TAG: str = "rectangles"
 CANVAS_BACKGROUND_COLOR: str = "white"
 ROOT_TITLE: str = "Search Algorithm Presentation"
