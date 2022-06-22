@@ -2,7 +2,6 @@
 from UserInterface.GraphicalUserInterface import *
 
 
-
 def main():
 
     window = GraphicalUserInterface()

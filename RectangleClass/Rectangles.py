@@ -12,7 +12,7 @@ RANDOM_SEED_START: int = 5
 RANDOM_SEED_END: int = 100
 
 # Specifies the total amount of values stored within the randomly generated array.
-ARRAYSIZE: int = 58
+ARRAYSIZE: int = 30
 
 CANVAS_WIDTH:int = 1920
 CANVAS_HEIGHT:int = 1000
@@ -34,31 +34,118 @@ class Rectangle:
     x1Coordinate: int = 3
     x2Coordinate: int = x1Coordinate
     
-
-    def __init__(self, rectangleValue: int) -> None:
+    def __init__(self, rectangleValue: int, canvasObject: object) -> None:
+        
+        """Initializes the class wide canvas object, where all rectangles are drawn on and
+        sets up the visualisation per individual rectangle instance."""
+        
+        Rectangle.initializeCanvasObject(canvasObject= canvasObject)
+        
         self.rectangleValue = rectangleValue
-        self.rectangleObject = self.createRectangle(rectangleValue)
+        self.rectangleOnCanvas = self.initializeRectangle(rectangleValue)
 
 
     def __repr__(self) -> str:
-        return f"{Rectangle.rectangleTag} - Value: {self.rectangleValue}"
+        return f"{self.rectangleValue}"
 
 
-    def setCanvasObject(canvasObject: object) -> None:
+    def __eq__(self, object: object) -> bool:
+        return self.rectangleValue == object.rectangleValue
+
+
+    def __lt__(self, object: object) -> bool:
+        return self.rectangleValue < object.rectangleValue
+
+
+    def __le__(self, object: object) -> bool:
+        return self.rectangleValue <= object.rectangleValue
+
+
+    def __gt__(self, object: object) -> bool:
+        return self.rectangleValue > object.rectangleValue
+
+
+    def __ge__(self, object: object) -> bool:
+        return self.rectangleValue >= object.rectangleValue
+
+
+    def createRandomValues(canvasObject: object = None) -> None:
+        """Populates the allRectangles list with rectangles, containing randomly created values. Basically sets up the rectangles visualized on screen."""
+
+        try: 
+            # Trying to delete existing rectangles, if some exist
+            Rectangle.deleteAllRectanglesList()
+            Rectangle.clearCanvas()
+
+        finally:
+
+            # In every case, new rectangle objects are created, the rectanglesAll list is populated with values and the 
+            # rectangles are visualized on the canvas object
+
+            for _ in range(1, ARRAYSIZE):
+                Rectangle.initializeCanvasObject(canvasObject)
+                Rectangle(randint(1, 150000), Rectangle.canvas)
+
+
+    def initializeCanvasObject(canvasObject: object) -> None:
         
         """Sets the canvas object for the rectangle class on which the rectangles will be drawn."""
 
         Rectangle.canvas = canvasObject
 
 
+    def deleteAllRectanglesList() -> None:
+        
+        """Deletes the class list for all rectangles. Needed when new, randomized values should be created and visualized as rectangles.
+        Resets the rectangle coordinates as well, since they need to be reset to present new rectangles."""
+
+        Rectangle.allRectangles.clear()
+        Rectangle.x1Coordinate = 3
+        Rectangle.x2Coordinate = Rectangle.x1Coordinate
+
+
+    def clearCanvas() -> None:
+        
+        """Deletes the rectangles displayed on the Rectangle.canvas object."""
+
+        Rectangle.canvas.delete("all")
+
+
+    def switchRectanglePositions(currentLeftRectangleIndex: int, currentRightRectangleIndex: int) -> None:
+        
+        """Switches the coordinate values of two rectangles given. Used to switch position"""
+
+        leftRectangle = Rectangle.allRectangles[currentLeftRectangleIndex]
+        rightRectangle = Rectangle.allRectangles[currentRightRectangleIndex]
+
+
+        leftx1, lefty1, leftx2, lefty2 = Rectangle.canvas.coords(leftRectangle.rectangleOnCanvas)
+        rightx1, righty1, rightx2, righty2 = Rectangle.canvas.coords(rightRectangle.rectangleOnCanvas)
+
+
+        Rectangle.canvas.coords(leftRectangle.rectangleOnCanvas, rightx1, lefty1, rightx2, lefty2)
+        Rectangle.canvas.coords(rightRectangle.rectangleOnCanvas, leftx1, righty1, leftx2, righty2)
+
+
+    def switchRectangleListPositions(currentLeftRectangleIndex: int, currentRightRectangleIndex: int) -> None:
+        
+        """Switches the values within the rectanle list. Important for comparison reason to let the list be sorted not 
+        only visually, but by values as well."""
+
+        temp = Rectangle.allRectangles[currentLeftRectangleIndex]
+        Rectangle.allRectangles[currentLeftRectangleIndex] = Rectangle.allRectangles[currentRightRectangleIndex]
+        Rectangle.allRectangles[currentRightRectangleIndex] = temp
+
+
     def changeRectangleColor(self, color: str) -> None:
         
         """Function to change the color of the rectangle object into the color passed in as parameter."""
 
-        Rectangle.canvas.itemconfig(self.rectangleObject, fill=color)
+        Rectangle.canvas.itemconfig(self.rectangleOnCanvas, 
+                                    fill= color)
     
 
-    def createRectangle(self, rectangleValue: int) -> object:
+    def initializeRectangle(self, rectangleValue: int) -> object:
         
         """Create an rectangle object and store it within the Rectangle Class list. 
         Afterwards, returning it as return value."""      
@@ -66,12 +153,12 @@ class Rectangle:
         Rectangle.x2Coordinate: int = Rectangle.x1Coordinate + Rectangle.barWidth
 
         # Creation of the rectangle object, storing the id within tempVar
-        rectangleInformation = Rectangle.canvas.create_rectangle(Rectangle.x1Coordinate, 
-                                                    BAR_HEIGHT - (rectangleValue // BAR_HEIGHT) - 50, 
-                                                    Rectangle.x2Coordinate, 
-                                                    BAR_HEIGHT, 
-                                                    tags= self.rectangleTag, 
-                                                    fill=INITIAL_RECTANGLE_COLOR)
+        rectangleOnCanvas = Rectangle.canvas.create_rectangle(Rectangle.x1Coordinate, 
+                                                            BAR_HEIGHT - (rectangleValue // BAR_HEIGHT) - 50, 
+                                                            Rectangle.x2Coordinate, 
+                                                            BAR_HEIGHT, 
+                                                            tags= Rectangle.rectangleTag, 
+                                                            fill=INITIAL_RECTANGLE_COLOR)
 
         Rectangle.x1Coordinate = Rectangle.x2Coordinate + 2
 
@@ -79,62 +166,56 @@ class Rectangle:
         Rectangle.allRectangles.append(self)
 
         # Returns a rectangle object
-        return rectangleInformation
+        return rectangleOnCanvas
 
 
     def deleteRectangle(self) -> None:
+        
         """Function to delete the rectangle object via accessing it with its tag. Tags are set individually."""
 
-        Rectangle.canvas.delete(self.rectangleObject)
-
-    
-    def getCoords(self) -> tuple[int, int, int, int]:
-        
-        """Returns the current coordinates of the rectangle object."""
-
-        return Rectangle.canvas.coords(self.rectangleObject)
+        Rectangle.canvas.delete(self.rectangleOnCanvas)
 
 
-    def setCoords(self, newCoords: tuple[int, int, int, int]) -> None:
-        
-        """Sets the coordinates for a given rectangle to the new coords given as input parameter"""
 
-        Rectangle.canvas.coords(self.rectangleObject, *newCoords)
 
-    
-    def switchRectanglePositions(currentLeftRectangle: object, currentRightRectangle: object) -> None:
-        
-        """Switches the coordinate values of two rectangles given. Used to switch position"""
 
-        leftRectangleCoordinates = currentLeftRectangle.getCoords()
-        rightRectangleCoordinates = currentRightRectangle.getCoords()
-
-        currentLeftRectangle.setCoords(rightRectangleCoordinates)
-        currentRightRectangle.setCoords(leftRectangleCoordinates)
-    
-    
-    def increaseHeight(self):
-        Rectangle.allRectangles[9].changeRectangleColor("red")
-        Rectangle.allRectangles[8].changeRectangleColor("blue")
-        Rectangle.allRectangles[10].changeRectangleColor("purple")
-
-        Rectangle.switchRectanglePositions(Rectangle.allRectangles[8], Rectangle.allRectangles[10])
-        
-        
 
 # from tkinter import *
-
 # root = Tk()
-# canv = Canvas(root, bg= CANVAS_BACKGROUND_COLOR, width= CANVAS_WIDTH + 20, height=CANVAS_HEIGHT, relief= SUNKEN)
-# canv.pack()
-# Rectangle.setCanvasObject(canv)
+# can = Canvas(root, bg= CANVAS_BACKGROUND_COLOR, width= CANVAS_WIDTH + 20, height=CANVAS_HEIGHT, relief= SUNKEN)
+# can.pack()
 
+# Button(root, text="Start Bubblesort", command= lambda: bubblesort()).pack()
+# Button(root, text="Generate random values", command= lambda: Rectangle.createRandomValues(canvasObject = can)).pack()
 
-# for i in range(1, ARRAYSIZE):
-#     Rectangle(randint(400, 300000))
+# def bubblesort():
 
+#     for i in range(len(Rectangle.allRectangles)):
+#         for i in range(len(Rectangle.allRectangles)):
 
-# Button(root, text= "change color", command= lambda: Rectangle.allRectangles[2].increaseHeight()).pack()
+#             if i+1 > len(Rectangle.allRectangles) -1:
+#                 break
 
+#             Rectangle.allRectangles[i].changeRectangleColor("pink")
+
+#             if Rectangle.allRectangles[i].rectangleValue > Rectangle.allRectangles[i + 1].rectangleValue:
+#                 Rectangle.allRectangles[i].changeRectangleColor("red")
+#                 Rectangle.allRectangles[i + 1].changeRectangleColor("red")
+#                 Rectangle.switchRectanglePositions(i , i+1)
+#                 Rectangle.switchRectangleListPositions(i , i+1)
+
+#             var = IntVar()
+#             root.after(5, lambda: var.set(1))
+#             root.wait_variable(var)
+
+#             Rectangle.allRectangles[i].changeRectangleColor(INITIAL_RECTANGLE_COLOR)
+#             Rectangle.allRectangles[i + 1].changeRectangleColor(INITIAL_RECTANGLE_COLOR)
+   
+#     for i in range(len(Rectangle.allRectangles)):
+#         var = IntVar()
+#         root.after(5, lambda: var.set(1))
+#         root.wait_variable(var)
+
+#         Rectangle.allRectangles[i].changeRectangleColor("green")
 
 # root.mainloop()
