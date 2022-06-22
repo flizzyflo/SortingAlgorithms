@@ -1,6 +1,4 @@
-
 from typing import Callable
-
 
 def bubbleSort(values: list[int], createRectangles: Callable, finalizeSearch: Callable) -> None:
 

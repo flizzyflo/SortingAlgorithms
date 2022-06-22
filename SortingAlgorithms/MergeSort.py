@@ -1,4 +1,3 @@
-
 import math
 
 def splitArray(values: list[int]) -> list[int]:

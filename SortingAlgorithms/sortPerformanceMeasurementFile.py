@@ -1,26 +1,31 @@
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import randint
 from typing import Callable
-
+from createRandomArray import createRandomArray
 import BubbleSort, InsertionSort, MergeSort
 
-arr = []   
-for i in range (15_000):
-   arr.append(randint(1, 1_000_000))
 
-def testPerformance(array: list[int], algoritm: Callable):
-    start = datetime.now()
-    algoritm(array)
-    duration = datetime.now() - start
+# Creating the random array for the testing purposes
+unsortedArray: list[int] = createRandomArray(150_000)
+
+def testPerformance(arrayToBeSorted: list[int], sortAlgorithm: Callable):
+
+    """Function to track the performance of the sorting algorithms. Tracking is created with the 
+    time function. Rough estimate, just for raw comparison."""
+
+    start: datetime = datetime.now()
+    sortAlgorithm(arrayToBeSorted)
+    duration: timedelta = datetime.now() - start
     
-    return f"Sorting is done. '{algoritm.__name__}' took {duration} for sorting an array with '{len(array)}' random values."
+    return f"Sorting is done. '{sortAlgorithm.__name__}' took {duration} for sorting an array with '{len(arrayToBeSorted)}' random values."
 
 
-arr_comp = arr.copy()
-arr2 = arr.copy()
+# Creating the comparison arrays for the build in sorted function.
+arr_comp = unsortedArray.copy()
+arr2 = unsortedArray.copy()
 arr2_comp = arr2.copy()
-arr3 = arr.copy()
+arr3 = unsortedArray.copy()
 
 print("\n" * 3)
 print("-" * 30, "Sorting Performance", "-" * 30)
@@ -32,3 +37,5 @@ print("-" * 30, "Sorting Performance", "-" * 30)
 # print("-" * 81)
 print(testPerformance(arr3, MergeSort.splitArray))
 print(f"Sorting ist correct: {MergeSort.splitArray(arr3) == sorted(arr3)}")
+print("Correctness check via comparison is based on build-in Python applied on the array 'sorted' function.")
+print("-" * 81)

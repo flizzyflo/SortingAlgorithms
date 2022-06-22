@@ -1,30 +1,32 @@
-
-
 import math
 from random import randint
 
+# COLUMSPAN: int = 5
+# SORTING_SPEED: int = 75 #lower value = faster sorting
 
-COLUMSPAN: int = 5
-SORTING_SPEED: int = 75 #lower value = faster sorting
+# # SeedSize regulates, within which size-interval the randomly created values can be. Start is lower, end is upper bound
+# RANDOM_SEED_START: int = 5 
+# RANDOM_SEED_END: int = 100
 
-# SeedSize regulates, within which size-interval the randomly created values can be. Start is lower, end is upper bound
-RANDOM_SEED_START: int = 5 
-RANDOM_SEED_END: int = 100
+# # Specifies the total amount of values stored within the randomly generated array.
+# ARRAYSIZE: int = 30
 
-# Specifies the total amount of values stored within the randomly generated array.
-ARRAYSIZE: int = 30
+# CANVAS_WIDTH:int = 1920
+# CANVAS_HEIGHT:int = 1000
+# BAR_HEIGHT:int = CANVAS_HEIGHT - 1
 
-CANVAS_WIDTH:int = 1920
-CANVAS_HEIGHT:int = 1000
-BAR_HEIGHT:int = CANVAS_HEIGHT - 1
+# INITIAL_RECTANGLE_COLOR: str = "#40E0D0"
+# RECTANGLE_OBJECT_TAG: str = "rectangles"
+# CANVAS_BACKGROUND_COLOR: str = "white"
 
-INITIAL_RECTANGLE_COLOR: str = "#40E0D0"
-RECTANGLE_OBJECT_TAG: str = "rectangles"
-CANVAS_BACKGROUND_COLOR: str = "white"
-ROOT_TITLE: str = "Search Algorithm Presentation"
-GEOMETRY_MEASUREMENT: str = "2000x1200"
 
 class Rectangle:
+
+    """Rectangle class represents the rectangles displayed on a canvas passed in as object.
+    The class manages the comparison, ordering and visualisation of both, the rectangles and the 
+    values list underlying the rectangles. The class has either class (static) or object methods to
+    manage the data."""
+
 
     allRectangles: list[object] = []
     canvas: object = None
@@ -70,10 +72,14 @@ class Rectangle:
 
 
     def createRandomValues(canvasObject: object = None) -> None:
+        
         """Populates the allRectangles list with rectangles, containing randomly created values. Basically sets up the rectangles visualized on screen."""
 
         try: 
             # Trying to delete existing rectangles, if some exist
+            # Counts for both, the rectangle values list which takes care of the raw list order
+            # as well as for the visualization. 
+
             Rectangle.deleteAllRectanglesList()
             Rectangle.clearCanvas()
 
@@ -177,9 +183,7 @@ class Rectangle:
 
 
 
-
-
-
+### Since this rectangle class is not implemented yet, this commented section is a "testrun" for this class
 # from tkinter import *
 # root = Tk()
 # can = Canvas(root, bg= CANVAS_BACKGROUND_COLOR, width= CANVAS_WIDTH + 20, height=CANVAS_HEIGHT, relief= SUNKEN)

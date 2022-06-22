@@ -1,6 +1,4 @@
-
 from typing import Callable
-
 
 def insertionSort(values: list[int], createRectangles: Callable, finalizeSearch: Callable) -> None:
 

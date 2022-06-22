@@ -8,7 +8,7 @@ from SortingAlgorithms.createRandomArray import createRandomArray
 
 from tkinter import *
 from tkinter import ttk
-from Settings import *
+from Settings.Settings import *
 
 class GraphicalUserInterface:
     
@@ -55,8 +55,6 @@ class GraphicalUserInterface:
                     state= DISABLED,
                     command= lambda: splitArray(self.values)).grid(row= 0, column= 3)
 
-
-
         self.root.mainloop()
 
 
@@ -72,12 +70,6 @@ class GraphicalUserInterface:
 
         """Creates rectangles based on the values stored within the values list passed in as argument."""  
        
-
-        # for value in values:
-        #     Rectangle(value)
-
-
-
         try:
             # If rectagles already exist, try to delete them
             self.deleteRectangles(rectangleTag)
@@ -103,6 +95,7 @@ class GraphicalUserInterface:
                 x1Coordinate = x2Coordinate + 2
                 # Updating starting coordinate for new bar ot the place next to the bar created before with a little gap of 2 between both bars
 
+            # Forces the tkinter gui to wait, thus the animation of the sorting itself is smoothened.
             var = IntVar()
             self.root.after(5, lambda: var.set(1))
             self.root.wait_variable(var)
@@ -126,6 +119,7 @@ class GraphicalUserInterface:
         
         self.canvas.itemconfig(self.rectangles[indexNumber], fill=color)
 
+        # Forces the tkinter gui to wait, thus the animation of the sorting itself is smoothened.
         var = IntVar()
         self.root.after(10, lambda: var.set(1))
         self.root.wait_variable(var)
