@@ -1,6 +1,6 @@
 from typing import Callable
 
-def insertionSort(values: list[int], createRectangles: Callable, finalizeSearch: Callable) -> None:
+def insertionSort(values: list[int], createRectangles: Callable = None, finalizeSearch: Callable = None) -> None:
 
    """Implementation of insertion sort. This approach compares a value with the former value. If the former value 
    is bigger than the current value, both are swapped. This algorithm works in-place and is stable."""      
@@ -22,14 +22,17 @@ def insertionSort(values: list[int], createRectangles: Callable, finalizeSearch:
             #temporaryValue = values[backwardCounter]
             values[backwardCounter], values[backwardCounter+1] = currentValue, values[backwardCounter]
             #values[backwardCounter+1] = temporaryValue
-           
-            createRectangles(values)
-            # updates the GUI, according to the current values of the values list
-         
+            if createRectangles:
+                # updates the GUI, according to the current values of the values list, if used in visualization.
 
+               createRectangles(values)
+         
          backwardCounter -= 1
          # Counter to move backwards within the array. If j == 0 is reached, the beginning of the array is reached and the while loop ends. 
          # Returns to the for loop, increases i, meaning grabbing the next value in the array and restart overall sorting.
-
-   for index in range(len(values)):
-        finalizeSearch(index)
+   
+   if finalizeSearch:
+   # changing the bar color to green when search is complete and algorithm is used in tkinter gui.        
+   
+      for index in range(len(values)):
+         finalizeSearch(index)
