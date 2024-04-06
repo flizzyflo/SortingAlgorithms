@@ -1,68 +1,58 @@
 import math
+from typing import List
 
-def splitArray(values: list[int]) -> list[int]:
-    
-    """Calculates a divider and splits the array in its half, returning a single value as soon as 
-    the length of the passed argument is 1. This algorithm does not work in-place, but is stable."""
+class MergeSort:
 
-    if values == []:
-        return
+    def __init__(self, rawValues: List[int], createRectangles):
+        self.rawValues = rawValues
+        self.createRectangles = createRectangles
+        self.sort(self.rawValues)
 
-    if 0 < len(values) <= 1:
-        return values
+    def sort(self, unsorted_array: List[int | float]) -> None:
 
-    else:
-        arrayDivider: int = math.floor(len(values) / 2)
-        # Calculates a divider in the middle of the passed in values array to split the array in its middle.
-        # Pass both arrays into the recursive call, and split them again, and merge both values as soon as 
-        # the recursive base condition is met.
+        midIndex: int = len(unsorted_array) // 2
 
-        return mergeArrays(splitArray(values[:arrayDivider]), splitArray(values[arrayDivider:]))
-        
+        if len(unsorted_array) < 2:
+            return
 
-def mergeArrays(leftValuesArray: list[int], rightValuesArray: list[int]) -> list[int]:
+        leftLow = 0
+        leftHigh = midIndex
+        rightLow = midIndex
+        rightHigh = len(unsorted_array) - 1
 
-    """Main merge sorting algorithm, which zips together both of the two seperate lists.
-    Takes two already sorted arrays as input and puts them together."""
+        leftArray = unsorted_array[:midIndex]
+        rightArray = unsorted_array[midIndex:]
 
-    resultArray = []
-    lenghtLeftArray = len(leftValuesArray)
-    lengthRightArray = len(rightValuesArray)
+        self.sort(leftArray)
+        self.sort(rightArray)
+        self.merge(unsorted_array, leftArray, rightArray)
 
-    for _ in range(lenghtLeftArray + lengthRightArray):
-        # overall run through the entire values of both arrays
-        
-        if (len(leftValuesArray) == 0) and (len(rightValuesArray) > 0):
-            # if the left values array is empty, that means all values in
-            # the rightValues array are bigger. Thus, they can be added to the result array
+    def merge(self, parentArray, leftHalf, rightHalf) -> None:
 
-            for value in rightValuesArray:
-                resultArray.append(value)
-            return resultArray
-        
-        elif (len(rightValuesArray) == 0) and (len(leftValuesArray) > 0):
-            # if the rightValues array is empty, that means all values in
-            # the leftValues array are bigger. Thus, they can be added to the result array
+        #self.createRectangles(self.rawValues)
+        leftHalfIdx, rightHalfIdx, parentArrayIdx = 0, 0, 0
 
-            for value in leftValuesArray:
-                resultArray.append(value)
-            return resultArray
+        while leftHalfIdx < len(leftHalf) and rightHalfIdx < len(rightHalf):
+            #self.createRectangles(self.rawValues)
+            if leftHalf[leftHalfIdx] <= rightHalf[rightHalfIdx]:
+                parentArray[parentArrayIdx] = leftHalf[leftHalfIdx]
+                leftHalfIdx += 1
 
-        if leftValuesArray[0] <= rightValuesArray[0]:
-            # if the current value of the leftValues array is lower
-            # than the current value of the right array, pass leftValue 
-            # into the result array and pop it from leftValue array.
+            elif rightHalf[rightHalfIdx] < leftHalf[leftHalfIdx]:
+                parentArray[parentArrayIdx] = rightHalf[rightHalfIdx]
+                rightHalfIdx += 1
+            parentArrayIdx += 1
 
-            resultArray.append(leftValuesArray.pop(0))
-            continue
 
-        elif rightValuesArray[0] < leftValuesArray[0]:
-            # if the current value of the rightValues array is lower
-            # than the current value of the leftValues array, pass rightValue 
-            # into the result array and pop it from rightValue array.
+        while leftHalfIdx < len(leftHalf):
+            parentArray[parentArrayIdx] = leftHalf[leftHalfIdx]
+            leftHalfIdx += 1
+            parentArrayIdx += 1
+            #self.createRectangles(self.rawValues)
 
-            resultArray.append(rightValuesArray.pop(0))
-            continue
+        while rightHalfIdx < len(rightHalf):
+            parentArray[parentArrayIdx] = rightHalf[rightHalfIdx]
+            rightHalfIdx += 1
+            parentArrayIdx += 1
 
-  
-    return resultArray
+            #self.createRectangles(self.rawValues)
