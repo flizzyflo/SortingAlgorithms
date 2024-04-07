@@ -1,9 +1,8 @@
 
 from datetime import datetime, timedelta
-from random import randint
 from typing import Callable
 from createRandomArray import createRandomArray
-import BubbleSort, InsertionSort, MergeSort
+import mergesort
 
 
 # Creating the random array for the testing purposes
