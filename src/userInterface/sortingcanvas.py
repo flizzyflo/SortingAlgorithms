@@ -2,7 +2,7 @@ import math
 import tkinter as tk
 from typing import List
 
-from src.sortingAlgorithms.createRandomArray import createRandomArray
+from src.numbergenerator.createrandomnumbers import create_random_numbers
 from src.userInterface.colorenum import ColorEnum
 
 CANVAS_WIDTH: int = 2000
@@ -22,7 +22,7 @@ class SortingCanvas(tk.Canvas):
         self.root: tk.Widget = root
 
         self.rectangles: List[int] = []
-        self.valuesToSort: List[int] = createRandomArray(ARRAYSIZE)
+        self.valuesToSort: List[int] = create_random_numbers(ARRAYSIZE)
         self.shuffleArray(self.valuesToSort)
 
     def getValuesToSort(self) -> List[int]:

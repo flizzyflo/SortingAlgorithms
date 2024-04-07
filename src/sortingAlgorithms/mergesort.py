@@ -37,19 +37,20 @@ class MergeSort:
         while leftHalfIdx < len(leftHalf) and rightHalfIdx < len(rightHalf):
 
             self.sortingCanvas.colorizeSingleBar(parentArrayIdx, ColorEnum.GREEN.value)
-            self.sortingCanvas.colorizeSingleBar(rightHalfIdx, ColorEnum.PURPLE.value)
 
             if leftHalf[leftHalfIdx] <= rightHalf[rightHalfIdx]:
-
                 parentArray[parentArrayIdx] = leftHalf[leftHalfIdx]
                 leftHalfIdx += 1
+                self.sortingCanvas.colorizeSingleBar(leftHalfIdx, ColorEnum.PURPLE.value)
 
             elif rightHalf[rightHalfIdx] < leftHalf[leftHalfIdx]:
                 parentArray[parentArrayIdx] = rightHalf[rightHalfIdx]
+                self.sortingCanvas.colorizeSingleBar(rightHalfIdx, ColorEnum.PURPLE.value)
                 rightHalfIdx += 1
+
             parentArrayIdx += 1
 
-            self.sortingCanvas.colorizeSingleBar(parentArrayIdx, ColorEnum.GREEN.value)
+            self.sortingCanvas.colorizeSingleBar(leftHalfIdx, ColorEnum.GREEN.value)
             self.sortingCanvas.colorizeSingleBar(rightHalfIdx, ColorEnum.PURPLE.value)
             self.sortingCanvas.createRectangles(self.valuesToSort)
 

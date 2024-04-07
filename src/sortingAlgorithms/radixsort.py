@@ -1,6 +1,5 @@
 from typing import List
 
-from src.sortingAlgorithms.createRandomArray import createRandomArray
 from src.userInterface.colorenum import ColorEnum
 from src.userInterface.sortingcanvas import SortingCanvas
 

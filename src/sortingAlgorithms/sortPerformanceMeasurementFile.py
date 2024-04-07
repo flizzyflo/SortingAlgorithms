@@ -1,12 +1,10 @@
 
 from datetime import datetime, timedelta
 from typing import Callable
-from createRandomArray import createRandomArray
-import mergesort
-
+from src.numbergenerator.createrandomnumbers import create_random_numbers
 
 # Creating the random array for the testing purposes
-unsortedArray: list[int] = createRandomArray(150_000)
+unsortedArray: list[int] = create_random_numbers(150_000)
 
 def testPerformance(arrayToBeSorted: list[int], sortAlgorithm: Callable):
 

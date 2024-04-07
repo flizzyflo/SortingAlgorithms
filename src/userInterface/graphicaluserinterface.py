@@ -4,8 +4,7 @@ from src.sortingAlgorithms.bubblesort import bubbleSort
 from src.sortingAlgorithms.insertionsort import insertionSort
 from src.sortingAlgorithms.mergesort import MergeSort
 from src.sortingAlgorithms.radixsort import RadixSort
-from src.sortingAlgorithms.createRandomArray import createRandomArray
-from src.userInterface.colorenum import ColorEnum
+from src.numbergenerator.createrandomnumbers import create_random_numbers
 from src.userInterface.sortingcanvas import SortingCanvas
 
 CANVAS_WIDTH: int = 2000
@@ -28,7 +27,7 @@ class GraphicalUserInterface(tk.Tk):
         self.DELAY: int = 5
         self.BAR_GAP: int = 3
         self.BAR_WIDTH_OFFSET: float = 1.0
-        self.values: List[int] = createRandomArray(ARRAYSIZE)
+        self.values: List[int] = create_random_numbers(ARRAYSIZE)
 
         tk.Label(self,
                  text="Visualization of several sorting algoritms",
@@ -52,8 +51,8 @@ class GraphicalUserInterface(tk.Tk):
 
         tk.Button(framesInRootWidget[0],
                   text="Shuffle Values",
-                  command=lambda: self.sortingCanvas.shuffleArray(createRandomArray(ARRAYSIZE))).grid(row=0,
-                                                                                                      column=0)
+                  command=lambda: self.sortingCanvas.shuffleArray(create_random_numbers(ARRAYSIZE))).grid(row=0,
+                                                                                                          column=0)
         tk.Button(framesInRootWidget[0],
                   text="Start Bubble Sort",
                   state=tk.NORMAL,
