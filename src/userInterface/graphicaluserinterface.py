@@ -1,7 +1,7 @@
 from typing import List, Tuple
 import tkinter as tk
-from src.sortingAlgorithms.BubbleSort import bubbleSort
-from src.sortingAlgorithms.InsertionSort import insertionSort
+from src.sortingAlgorithms.bubblesort import bubbleSort
+from src.sortingAlgorithms.insertionsort import insertionSort
 from src.sortingAlgorithms.mergesort import MergeSort
 from src.sortingAlgorithms.radixsort import RadixSort
 from src.sortingAlgorithms.createRandomArray import createRandomArray
