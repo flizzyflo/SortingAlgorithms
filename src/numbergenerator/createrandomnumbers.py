@@ -1,4 +1,5 @@
-from random import randint
+
+from random import randint, shuffle
 from typing import List
 
 
@@ -13,3 +14,7 @@ def create_random_numbers(desiredArraySize: int, seedStart: int = 100, seedEnd: 
         randomArray.append(randint(seedStart, seedEnd))
     
     return randomArray
+
+
+def shuffleNumbers(numbersToShuffle: List[int]) -> None:
+    shuffle(numbersToShuffle)
