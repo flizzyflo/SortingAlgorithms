@@ -1,7 +1,6 @@
-import copy
+import random
 from typing import List
 
-from src.numbergenerator.createrandomnumbers import create_random_numbers
 from src.sortingAlgorithms.abstractsort import AbstractSort
 from src.userInterface.canvas.sortingcanvas import SortingCanvas
 from src.userInterface.colors.colorenum import ColorEnum
@@ -15,7 +14,6 @@ class QuickSort(AbstractSort):
 
         if self.sortingCanvas:
             self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
-            # changing the bar color to green when search is complete and algorithm is used in tkinter gui.
             self.sortingCanvas.endSearch(self.dataToSort)
 
     def sort(self):
@@ -23,42 +21,47 @@ class QuickSort(AbstractSort):
         self.__quicksort(0, MAX_IDX)
 
     def __quicksort(self, left: int, right: int) -> None:
-        if left < right:
-            pivotElement: int = self.__divide(left, right)
-            self.__quicksort(left, pivotElement - 1)
-            self.__quicksort(pivotElement + 1, right)
 
-    def __divide(self, left: int, right: int) -> int:
+        if left >= right:
+            return
 
-        pivotElement: int = right
-        self.sortingCanvas.colorizeSingleDrawnRectangle(pivotElement, ColorEnum.PURPLE.value)
+        # returns the middle element to split the list at
+        leftPointer = self.__partition(left, right)
 
-        while left < right - 1:
+        # partial arrays. left pointer is set to where it met the right pointer, thus this is the
+        # new middle of the subcall array to sort
+        self.__quicksort(left, leftPointer - 1)
+        self.__quicksort(leftPointer + 1, right)
 
-            # iterate over left half until element smaller than pivot element is found
-            while left < right and self.dataToSort[left] < self.dataToSort[pivotElement]:
-                left += 1
+    def __partition(self, left: int, right: int) -> int:
+        pivotIndex: int = right
+        leftPointer: int = left
+        rightPointer: int = right
 
-            while right > left and self.dataToSort[right] >= self.dataToSort[pivotElement]:
-                right -= 1
+        # outer loop per call, until pointers meet
+        while leftPointer < rightPointer:
 
-            if self.dataToSort[left] > self.dataToSort[right]:
+            if self.sortingCanvas:
                 self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
+                self.sortingCanvas.colorizeSingleDrawnRectangle(pivotIndex, ColorEnum.PURPLE.value)
 
-                self.sortingCanvas.colorizeSingleDrawnRectangle(left, ColorEnum.ORANGE.value)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(right, ColorEnum.YELLOW.value)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(pivotElement, ColorEnum.PURPLE.value)
-                self.swap(leftIndex=left, rightIndex=right)
 
-           # self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
+            # iterate while either pointers meet or smaller or bigger element is found
+            while leftPointer < rightPointer and self.dataToSort[leftPointer] <= self.dataToSort[pivotIndex]:
+                leftPointer += 1
 
-        if self.dataToSort[left] > self.dataToSort[pivotElement]:
-            self.swap(leftIndex=left, rightIndex=right)
+            while rightPointer > leftPointer and self.dataToSort[rightPointer] >= self.dataToSort[pivotIndex]:
+                rightPointer -= 1
 
-        else:
-            left = right
+            self.sortingCanvas.colorizeSingleDrawnRectangle(leftPointer, ColorEnum.GREEN.value)
+            self.sortingCanvas.colorizeSingleDrawnRectangle(rightPointer, ColorEnum.GREEN.value)
 
-        self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
+            # pointers point to numbers smaller / bigger than pivot -> switch
+            # thus switch
+            self.swap(leftIndex=leftPointer, rightIndex=rightPointer)
+        # switch element of left pointer with pivot element
+        self.swap(leftIndex=leftPointer, rightIndex=right)
+        return leftPointer
 
-        return left
+
 
