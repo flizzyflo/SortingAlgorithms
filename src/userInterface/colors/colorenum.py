@@ -7,3 +7,5 @@ class ColorEnum(enum.Enum):
     RED: str = "#990000"
     YELLOW: str = "#FFFF66"
     ORANGE: str = "#E69138"
+    LIGHTBLUE: str = "#40E0D0"
+    WHITE: str = "#FFFFFF"
