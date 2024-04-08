@@ -3,13 +3,13 @@ import tkinter as tk
 from typing import List
 
 from src.numbergenerator.createrandomnumbers import create_random_numbers
-from src.userInterface.colorenum import ColorEnum
+from src.userInterface.colors.colorenum import ColorEnum
 
 CANVAS_WIDTH: int = 2000
 BAR_HEIGHT: int = 1000
-ARRAYSIZE: int = 200
+ARRAYSIZE: int = 500
 BAR_GAP: int = 2
-RENDER_DELAY: int = 5
+RENDER_DELAY: int = 1
 INITIAL_RECTANGLE_COLOR: str = "#40E0D0"
 RECTANGLE_OBJECT_TAG: str = "rectangles"
 CANVAS_BACKGROUND_COLOR: str = "white"
@@ -64,11 +64,6 @@ class SortingCanvas(tk.Canvas):
 
                 x1Coordinate = x2Coordinate + BAR_GAP
                 # Updating starting coordinate for new bar ot the place next to the bar created before with a little gap of 2 between both bars
-
-            # Forces the tkinter gui to wait, thus the animation of the sorting itself is smoothened.
-            var = tk.IntVar()
-            self.after(RENDER_DELAY, lambda: var.set(1))
-            self.wait_variable(var)
 
     def shuffleArray(self, values: list[int]) -> None:
 
