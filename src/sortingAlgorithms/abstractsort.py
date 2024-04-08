@@ -15,6 +15,13 @@ class AbstractSort(ABC):
     def sort(self) -> None:
         pass
 
+    def swap(self, *, leftIndex: int, rightIndex: int) -> None:
+        leftVal = self.dataToSort[leftIndex]
+        rightVal = self.dataToSort[rightIndex]
+
+        self.dataToSort[rightIndex] = leftVal
+        self.dataToSort[leftIndex] = rightVal
+
     def __str__(self) -> str:
         return "!"
 
