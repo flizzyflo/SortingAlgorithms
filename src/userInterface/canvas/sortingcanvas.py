@@ -5,77 +5,74 @@ from typing import List
 from src.numbergenerator.createrandomnumbers import create_random_numbers
 from src.userInterface.colors.colorenum import ColorEnum
 
-CANVAS_WIDTH: int = 2000
-BAR_HEIGHT: int = 1000
-ARRAYSIZE: int = 500
+BAR_HEIGHT: int = 680
 BAR_GAP: int = 2
-RENDER_DELAY: int = 1
-INITIAL_RECTANGLE_COLOR: str = "#40E0D0"
+RENDER_DELAY: int = 10
 RECTANGLE_OBJECT_TAG: str = "rectangles"
 CANVAS_BACKGROUND_COLOR: str = "white"
 
 
 class SortingCanvas(tk.Canvas):
 
-    def __init__(self, root: tk.Widget, *args, **kwargs):
+    def __init__(self, root: tk.Widget, arraySize: int, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.root: tk.Widget = root
+        self.arraySize = arraySize
+        self.BAR_TOP_PADDING: int = 10
+        self.BAR_FLOOR_PADDING: int = 10
 
         self.rectangles: List[int] = []
-        self.valuesToSort: List[int] = create_random_numbers(ARRAYSIZE)
-        self.shuffleArray(self.valuesToSort)
+        self.dataToSort: List[int] = create_random_numbers(self.arraySize, 10, 990)
+        self.shuffleArray(self.dataToSort)
 
     def getValuesToSort(self) -> List[int]:
-        return self.valuesToSort
+        return self.dataToSort
 
-    def deleteRectangles(self, deletionTag: str = "all") -> None:
+    def deleteDrawnRectanglesFromCanvas(self, deletionTag: str = "all") -> None:
 
         """Deletes every item which is presented within the canvas widget."""
 
         self.delete(deletionTag)
         self.rectangles.clear()
 
-    def createRectangles(self, values: list[int], initialStartingPosition: int = 3,
-                         rectangleTag: str = RECTANGLE_OBJECT_TAG) -> None:
+    def drawRectanglesToCanvas(self, values: list[int], initialStartingPosition: int = 3, rectangleTag: str = RECTANGLE_OBJECT_TAG) -> None:
 
         """Creates rectangles based on the values stored within the values list passed in as argument."""
 
         try:
             # If rectagles already exist, try to delete them
-            self.deleteRectangles(rectangleTag)
+            self.deleteDrawnRectanglesFromCanvas(rectangleTag)
 
         except Exception as e:
             print("Error:", e)
 
         finally:
-            barWidth = math.floor(self.root.master.getCanvasWidth() / ARRAYSIZE) - 2
-            x1Coordinate: float = initialStartingPosition
+            BAR_WIDTH: int = ((self.root.master.getCanvasWidth() - initialStartingPosition) /self.arraySize)
 
+            x0: float = initialStartingPosition
+            maxValue = max(self.dataToSort)
             for value in values:
-                x2Coordinate: float = x1Coordinate + barWidth
-                # setting x2 coordinate, basically the width of any bar.
 
-                self.rectangles.append(self.create_rectangle(x1Coordinate,
-                                                             BAR_HEIGHT - (value // BAR_HEIGHT),
-                                                             x2Coordinate,
-                                                             BAR_HEIGHT,
+                x1: float = x0 + BAR_WIDTH
+                y0: float = BAR_HEIGHT - ((value / maxValue) * BAR_HEIGHT) + self.BAR_TOP_PADDING # top coordinate
+                y1: float = BAR_HEIGHT
+                self.rectangles.append(self.create_rectangle(x0, y0, x1, y1,
                                                              tags=rectangleTag,
-                                                             fill=INITIAL_RECTANGLE_COLOR))
+                                                             fill=ColorEnum.LIGHTBLUE.value))
 
-                x1Coordinate = x2Coordinate + BAR_GAP
-                # Updating starting coordinate for new bar ot the place next to the bar created before with a little gap of 2 between both bars
+                x0 = x1
 
     def shuffleArray(self, values: list[int]) -> None:
 
         """Deletes existing rectangle bars presented within
         the canvas and recreates new bar elementes within the canvas."""
 
-        self.valuesToSort = values
+        self.dataToSort = values
 
-        self.deleteRectangles()
-        self.createRectangles(self.valuesToSort)
+        self.deleteDrawnRectanglesFromCanvas()
+        self.drawRectanglesToCanvas(self.dataToSort)
 
-    def colorizeSingleBar(self, indexNumber: int, color: str = INITIAL_RECTANGLE_COLOR) -> None:
+    def colorizeSingleDrawnRectangle(self, indexNumber: int, color: str = ColorEnum.LIGHTBLUE.value) -> None:
 
         """Function to change the color of a rectangle item within the canvas."""
         self.itemconfig(self.rectangles[indexNumber], fill=color)
@@ -87,4 +84,4 @@ class SortingCanvas(tk.Canvas):
 
     def endSearch(self, valuesToSort: List[int]) -> None:
         for index in range(len(valuesToSort)):
-            self.colorizeSingleBar(index, ColorEnum.GREEN.value)
+            self.colorizeSingleDrawnRectangle(index, ColorEnum.GREEN.value)
