@@ -31,10 +31,10 @@ class InsertionSort(AbstractSort):
 
                     if self.sortingCanvas:
                         # updates the GUI, according to the current values of the values list, if used in visualization.
-                        self.sortingCanvas.colorizeSingleBar(backwardCounter, ColorEnum.PURPLE.value)
-                        self.sortingCanvas.colorizeSingleBar(backwardCounter + 1, ColorEnum.ORANGE.value)
+                        self.sortingCanvas.colorizeSingleDrawnRectangle(backwardCounter, ColorEnum.PURPLE.value)
+                        self.sortingCanvas.colorizeSingleDrawnRectangle(backwardCounter + 1, ColorEnum.ORANGE.value)
 
-                        self.sortingCanvas.createRectangles(self.dataToSort)
+                        self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
 
                 backwardCounter -= 1
 

@@ -36,10 +36,10 @@ class BubbleSort(AbstractSort):
                     self.dataToSort[currentIndex] = temporary_object
 
                     if self.sortingCanvas:
-                        self.sortingCanvas.colorizeSingleBar(currentIndex, ColorEnum.GREEN.value)
-                        self.sortingCanvas.colorizeSingleBar(currentIndex + 1, ColorEnum.PURPLE.value)
+                        self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
+                        self.sortingCanvas.colorizeSingleDrawnRectangle(currentIndex, ColorEnum.GREEN.value)
+                        self.sortingCanvas.colorizeSingleDrawnRectangle(currentIndex + 1, ColorEnum.PURPLE.value)
                         # updates the GUI, according to the current values of the values list, if used in visualization.
-                        self.sortingCanvas.createRectangles(self.dataToSort)
 
                 else:
                     continue
