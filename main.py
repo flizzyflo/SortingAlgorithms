@@ -1,6 +1,6 @@
-from src.userInterface.graphicaluserinterface import GraphicalUserInterface
+from src.userInterface.mainframe.graphicaluserinterface import GraphicalUserInterface
 
-ROOT_TITLE: str = "Search Algorithm Presentation"
+ROOT_TITLE: str = "Search Algorithm Visualization"
 GEOMETRY_MEASUREMENT: str = "800x800"
 
 
