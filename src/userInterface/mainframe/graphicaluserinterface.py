@@ -2,56 +2,47 @@ from typing import List, Tuple
 import tkinter as tk
 
 from src.sortingAlgorithms.abstractsort import AbstractSort
-from src.sortingAlgorithms.bogosort import BogoSort
-from src.sortingAlgorithms.bubblesort import BubbleSort
-from src.sortingAlgorithms.insertionsort import InsertionSort
-from src.sortingAlgorithms.mergesort import MergeSort
-from src.sortingAlgorithms.radixsort import RadixSort
 from src.numbergenerator.createrandomnumbers import create_random_numbers
-from src.sortingAlgorithms.selectionsort import SelectionSort
 from src.userInterface.buttons.shufflevaluesbutton import ShuffleValuesButton
 from src.userInterface.canvas.sortingcanvas import SortingCanvas
 from src.userInterface.buttons.startsortbutton import StartSortButton
+from src.userInterface.colors.colorenum import ColorEnum
 from src.userInterface.frames.buttonframe import ButtonFrame
 from src.userInterface.frames.canvasframe import CanvasFrame
 
-CANVAS_WIDTH: int = 2000
-CANVAS_HEIGHT: int = 1000
-CANVAS_BACKGROUND_COLOR: str = "white"
-ARRAYSIZE: int = 500
+CANVAS_WIDTH: int = 1000
+CANVAS_HEIGHT: int = 800
 RECTANGLE_OBJECT_TAG: str = "rectangles"
-FONTSTYLE: Tuple[str, int, str] = ("Calibri", 18, "bold")
+FONTSTYLE: Tuple[str, int, str] = ("Arial", 18, "bold")
 
 
 class GraphicalUserInterface(tk.Tk):
     """Class to set up the whole visual presentation of the programm. Furthermore, it manages the
     visual presentation of the sorting itself."""
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, sortingAlgorithms: List[AbstractSort], desiredArraySize: int = 250, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self.CANVAS_WIDTH = CANVAS_WIDTH
         self.CANVAS_HEIGHT = CANVAS_HEIGHT
-        self.DELAY: int = 5
-        self.BAR_GAP: int = 3
-        self.BAR_WIDTH_OFFSET: float = 1.0
-        self.values: List[int] = create_random_numbers(ARRAYSIZE)
-
+        self.sortingAlgorithms: List[AbstractSort] = sortingAlgorithms
+        self.desiredArraySize: int = desiredArraySize
+        self.values: List[int] = create_random_numbers(self.desiredArraySize)
         canvasFrame: CanvasFrame = CanvasFrame(master=self)
         canvasFrame.pack(anchor="center")
 
         self.sortingCanvas: SortingCanvas = SortingCanvas(root=canvasFrame,
-                                                          bg=CANVAS_BACKGROUND_COLOR,
+                                                          arraySize=self.desiredArraySize,
+                                                          bg=ColorEnum.WHITE.value,
                                                           width=self.CANVAS_WIDTH,
                                                           height=self.CANVAS_HEIGHT,
                                                           relief=tk.SUNKEN)
 
         buttonFrame: ButtonFrame = ButtonFrame(master=self)
         buttonFrame.pack(anchor="center", pady=20)
-        sortingAlgorithms = [BubbleSort, InsertionSort, SelectionSort, MergeSort, RadixSort, BogoSort]
-        ShuffleValuesButton(buttonFrame, self.sortingCanvas, ARRAYSIZE).grid(row=0, column=0)
-        self.setUpSortButtons(sortingAlgorithms, buttonFrame)
 
+        ShuffleValuesButton(buttonFrame, self.sortingCanvas, self.desiredArraySize).grid(row=0, column=0)
+        self.setUpSortButtons(self.sortingAlgorithms, buttonFrame)
 
         self.sortingCanvas.pack(pady=20)
 
