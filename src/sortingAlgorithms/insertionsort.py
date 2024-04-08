@@ -1,33 +1,42 @@
-from src.userInterface.colorenum import ColorEnum
-from src.userInterface.sortingcanvas import SortingCanvas
+from typing import List
+
+from src.sortingAlgorithms.abstractsort import AbstractSort
+from src.userInterface.colors.colorenum import ColorEnum
+from src.userInterface.canvas.sortingcanvas import SortingCanvas
 
 
-def insertionSort(values: list[int], sortingCanvas: SortingCanvas) -> None:
-    """Implementation of insertion sort. This approach compares a value with the former value. If the former value
-   is bigger than the current value, both are swapped. This algorithm works in-place and is stable."""
+class InsertionSort(AbstractSort):
 
-    if len(values) == 0:
-        return
+    def __init__(self, *, dataToSort: List[int], sortingCanvas: SortingCanvas) -> None:
+        super().__init__(dataToSort=dataToSort, sortingCanvas=sortingCanvas)
+        self.sort()
 
-    for forwardCounter, currentValue in enumerate(values, 1):
+    def sort(self) -> None:
+        """Implementation of insertion sort. This approach compares a value with the former value. If the former value
+       is bigger than the current value, both are swapped. This algorithm works in-place and is stable."""
 
-        backwardCounter = forwardCounter - 1
+        if len(self.dataToSort) == 0:
+            return
 
-        while backwardCounter >= 0:
+        for forwardCounter, currentValue in enumerate(self.dataToSort, 1):
 
-            if values[backwardCounter] > currentValue:
-                # if current value is smaller than the former value, swap both.
+            backwardCounter = forwardCounter - 1
 
-                values[backwardCounter], values[backwardCounter + 1] = currentValue, values[backwardCounter]
+            while backwardCounter >= 0:
 
-                if sortingCanvas:
-                    # updates the GUI, according to the current values of the values list, if used in visualization.
-                    sortingCanvas.colorizeSingleBar(backwardCounter, ColorEnum.PURPLE.value)
-                    sortingCanvas.colorizeSingleBar(backwardCounter + 1, ColorEnum.ORANGE.value)
+                if self.dataToSort[backwardCounter] > currentValue:
+                    # if current value is smaller than the former value, swap both.
 
-                    sortingCanvas.createRectangles(values)
+                    self.dataToSort[backwardCounter], self.dataToSort[backwardCounter + 1] = currentValue, self.dataToSort[backwardCounter]
 
-            backwardCounter -= 1
+                    if self.sortingCanvas:
+                        # updates the GUI, according to the current values of the values list, if used in visualization.
+                        self.sortingCanvas.colorizeSingleBar(backwardCounter, ColorEnum.PURPLE.value)
+                        self.sortingCanvas.colorizeSingleBar(backwardCounter + 1, ColorEnum.ORANGE.value)
 
-    if sortingCanvas:
-        sortingCanvas.endSearch(values)
+                        self.sortingCanvas.createRectangles(self.dataToSort)
+
+                backwardCounter -= 1
+
+        if self.sortingCanvas:
+            self.sortingCanvas.endSearch(self.dataToSort)
