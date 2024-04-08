@@ -1,3 +1,4 @@
+
 from typing import List
 
 from src.sortingAlgorithms.abstractsort import AbstractSort
@@ -38,7 +39,7 @@ class RadixSort(AbstractSort):
         self.putBucketsToBaseList()
         self.clearBuckets()
         if self.sortingCanvas:
-            self.sortingCanvas.createRectangles(self.dataToSort)
+            self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
             self.sortingCanvas.endSearch(self.dataToSort)
 
     def addToBucket(self, numberAtCurrentNumberPosition: int, totalNumber: int) -> None:
@@ -53,8 +54,9 @@ class RadixSort(AbstractSort):
 
                 # visualisation
                 if self.sortingCanvas:
-                    self.sortingCanvas.colorizeSingleBar(originalArrayIndexer, ColorEnum.GREEN.value)
-                    self.sortingCanvas.createRectangles(self.dataToSort)
+                    self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
+                    self.sortingCanvas.colorizeSingleDrawnRectangle(originalArrayIndexer, ColorEnum.GREEN.value)
+
                 originalArrayIndexer += 1
 
     def clearBuckets(self) -> None:
@@ -63,3 +65,4 @@ class RadixSort(AbstractSort):
     def prepareBuckets(self) -> None:
         for bucketNumber in range(10):
             self.bucketContainer[bucketNumber] = []
+
