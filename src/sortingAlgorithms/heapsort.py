@@ -220,8 +220,7 @@ class HeapSort(AbstractSort):
         for index in range(len(self.dataToSort) - 1, -1, -1):
 
             if self.sortingCanvas:
-                self.sortingCanvas.colorizeSingleDrawnRectangle(index, ColorEnum.PURPLE.value)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(index, ColorEnum.ORANGE.value)
+                self.sortingCanvas.colorizeSingleDrawnRectangle(index, ColorEnum.GREEN.value)
                 self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
 
             # last element is put to heap.

@@ -46,6 +46,7 @@ class MergeSort(AbstractSort):
 
         # both pointers are within array bounds
         while leftHalfIdx < len(leftHalf) and rightHalfIdx < len(rightHalf):
+
             if self.sortingCanvas:
                 self.sortingCanvas.colorizeSingleDrawnRectangle(parentArrayIdx, ColorEnum.GREEN.value)
 
@@ -53,20 +54,15 @@ class MergeSort(AbstractSort):
             if leftHalf[leftHalfIdx] <= rightHalf[rightHalfIdx]:
                 parentArray[parentArrayIdx] = leftHalf[leftHalfIdx]
                 leftHalfIdx += 1
-                if self.sortingCanvas:
-                    self.sortingCanvas.colorizeSingleDrawnRectangle(leftHalfIdx, ColorEnum.PURPLE.value)
 
             # swap right value to parent array index position move to next element in right list
             elif rightHalf[rightHalfIdx] < leftHalf[leftHalfIdx]:
                 parentArray[parentArrayIdx] = rightHalf[rightHalfIdx]
                 rightHalfIdx += 1
-                if self.sortingCanvas:
-                    self.sortingCanvas.colorizeSingleDrawnRectangle(rightHalfIdx, ColorEnum.PURPLE.value)
 
             parentArrayIdx += 1
+
             if self.sortingCanvas:
-                self.sortingCanvas.colorizeSingleDrawnRectangle(leftHalfIdx, ColorEnum.GREEN.value)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(rightHalfIdx, ColorEnum.PURPLE.value)
                 self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
 
         # append remainder of left list to parent array
@@ -84,6 +80,3 @@ class MergeSort(AbstractSort):
             parentArray[parentArrayIdx] = rightHalf[rightHalfIdx]
             rightHalfIdx += 1
             parentArrayIdx += 1
-            if self.sortingCanvas:
-                self.sortingCanvas.colorizeSingleDrawnRectangle(rightHalfIdx, ColorEnum.PURPLE.value)
-                self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)

@@ -38,13 +38,15 @@ class QuickSort(AbstractSort):
         leftPointer: int = left
         rightPointer: int = right
 
+        if self.sortingCanvas:
+            self.sortingCanvas.colorizeSingleDrawnRectangle(right, ColorEnum.GREEN.value)
+
         # outer loop per call, until pointers meet
         while leftPointer < rightPointer:
 
             if self.sortingCanvas:
                 self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(pivotIndex, ColorEnum.PURPLE.value)
-
+                self.sortingCanvas.colorizeSingleDrawnRectangle(left, ColorEnum.GREEN.value)
 
             # iterate while either pointers meet or smaller or bigger element is found
             while leftPointer < rightPointer and self.dataToSort[leftPointer] <= self.dataToSort[pivotIndex]:
@@ -52,10 +54,6 @@ class QuickSort(AbstractSort):
 
             while rightPointer > leftPointer and self.dataToSort[rightPointer] >= self.dataToSort[pivotIndex]:
                 rightPointer -= 1
-
-            if self.sortingCanvas:
-                self.sortingCanvas.colorizeSingleDrawnRectangle(leftPointer, ColorEnum.GREEN.value)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(rightPointer, ColorEnum.GREEN.value)
 
             # pointers point to numbers smaller / bigger than pivot -> switch
             # thus switch

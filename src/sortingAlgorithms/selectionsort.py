@@ -22,12 +22,16 @@ class SelectionSort(AbstractSort):
             for idxOfNumberToCompare in range(positionToInsertNewMinVal + 1, maxIndex):
 
                 if self.sortingCanvas:
-                    self.sortingCanvas.colorizeSingleDrawnRectangle(idxOfNumberToCompare - 1, color=ColorEnum.LIGHTBLUE.value)
                     self.sortingCanvas.colorizeSingleDrawnRectangle(positionToInsertNewMinVal, color=ColorEnum.PURPLE.value)
-                    self.sortingCanvas.colorizeSingleDrawnRectangle(idxOfNumberToCompare, color=ColorEnum.GREEN.value)
 
                 if self.dataToSort[idxOfNumberToCompare] < self.dataToSort[newMinIdx]:
+                    if self.sortingCanvas:
+                        self.sortingCanvas.colorizeSingleDrawnRectangle(newMinIdx, color=ColorEnum.WHITE.value)
+
                     newMinIdx = idxOfNumberToCompare
+
+                    if self.sortingCanvas:
+                        self.sortingCanvas.colorizeSingleDrawnRectangle(newMinIdx, color=ColorEnum.ORANGE.value)
 
             if newMinIdx != positionToInsertNewMinVal:
                 newMinVal = self.dataToSort[newMinIdx]
