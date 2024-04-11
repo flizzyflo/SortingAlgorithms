@@ -20,25 +20,24 @@ class GraphicalUserInterface(tk.Tk):
     """Class to set up the whole visual presentation of the programm. Furthermore, it manages the
     visual presentation of the sorting itself."""
 
-    def __init__(self, sortingAlgorithms: List[AbstractSort], desiredArraySize: int = 250, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-
+    def __init__(self, sortingAlgorithms: List[AbstractSort], desiredArraySize: int, backgroundColor: str, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self.config(background=backgroundColor)
         self.CANVAS_WIDTH = CANVAS_WIDTH
         self.CANVAS_HEIGHT = CANVAS_HEIGHT
         self.sortingAlgorithms: List[AbstractSort] = sortingAlgorithms
         self.desiredArraySize: int = desiredArraySize
         self.values: List[int] = create_random_numbers(self.desiredArraySize)
-        canvasFrame: CanvasFrame = CanvasFrame(master=self)
+        canvasFrame: CanvasFrame = CanvasFrame(master=self, background=backgroundColor, borderwidth=0)
         canvasFrame.pack(anchor="center")
 
         self.sortingCanvas: SortingCanvas = SortingCanvas(root=canvasFrame,
                                                           arraySize=self.desiredArraySize,
-                                                          bg=ColorEnum.WHITE.value,
+                                                          bg=backgroundColor,
                                                           width=self.CANVAS_WIDTH,
-                                                          height=self.CANVAS_HEIGHT,
-                                                          relief=tk.SUNKEN)
+                                                          height=self.CANVAS_HEIGHT)
 
-        buttonFrame: ButtonFrame = ButtonFrame(master=self)
+        buttonFrame: ButtonFrame = ButtonFrame(master=self, background=backgroundColor, borderwidth=0, border=None)
         buttonFrame.pack(anchor="center", pady=20)
 
         ShuffleValuesButton(buttonFrame, self.sortingCanvas, self.desiredArraySize).grid(row=0, column=0)
