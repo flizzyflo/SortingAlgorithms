@@ -9,3 +9,6 @@ class ColorEnum(enum.Enum):
     ORANGE: str = "#E69138"
     LIGHTBLUE: str = "#40E0D0"
     WHITE: str = "#FFFFFF"
+    GREY: str = "#808080"
+
+
