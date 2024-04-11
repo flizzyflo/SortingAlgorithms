@@ -9,7 +9,7 @@ from src.userInterface.canvas.sortingcanvas import SortingCanvas
 class RadixSort(AbstractSort):
 
     def __init__(self, *, dataToSort: List[int], sortingCanvas: SortingCanvas):
-        super().__init__(dataToSort= dataToSort, sortingCanvas=sortingCanvas)
+        super().__init__(dataToSort=dataToSort, sortingCanvas=sortingCanvas)
         self.bucketContainer: dict[int, List[int]] = dict()
         self.maxNumberLength = len(str(max(self.dataToSort)))
         self.sort()
