@@ -5,6 +5,7 @@ from typing import List
 from src.numbergenerator.createrandomnumbers import create_random_numbers
 from src.userInterface.colors.colorenum import ColorEnum
 
+
 BAR_HEIGHT: int = 680
 BAR_GAP: int = 2
 RENDER_DELAY: int = 10
@@ -19,10 +20,10 @@ class SortingCanvas(tk.Canvas):
         self.root: tk.Widget = root
         self.arraySize = arraySize
         self.BAR_TOP_PADDING: int = 10
-        self.BAR_FLOOR_PADDING: int = 10
+        self.BAR_FLOOR_PADDING: int = 1
 
         self.rectangles: List[int] = []
-        self.dataToSort: List[int] = create_random_numbers(self.arraySize, 10, 990)
+        self.dataToSort: List[int] = create_random_numbers(self.arraySize)
         self.shuffleArray(self.dataToSort)
 
     def getValuesToSort(self) -> List[int]:
@@ -51,11 +52,16 @@ class SortingCanvas(tk.Canvas):
 
             x0: float = initialStartingPosition
             maxValue = max(self.dataToSort)
+
             for value in values:
 
                 x1: float = x0 + BAR_WIDTH
-                y0: float = BAR_HEIGHT - ((value / maxValue) * BAR_HEIGHT) + self.BAR_TOP_PADDING # top coordinate
-                y1: float = BAR_HEIGHT
+                y1: float = BAR_HEIGHT - self.BAR_FLOOR_PADDING
+                y0: float = y1 - ((value / maxValue) * (BAR_HEIGHT - self.BAR_FLOOR_PADDING)) + self.BAR_TOP_PADDING
+
+                if y0 >= y1:
+                    y0 = y1 - 1
+
                 self.rectangles.append(self.create_rectangle(x0, y0, x1, y1,
                                                              tags=rectangleTag,
                                                              fill=ColorEnum.WHITE.value,
