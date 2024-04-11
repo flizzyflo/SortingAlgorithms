@@ -53,8 +53,9 @@ class QuickSort(AbstractSort):
             while rightPointer > leftPointer and self.dataToSort[rightPointer] >= self.dataToSort[pivotIndex]:
                 rightPointer -= 1
 
-            self.sortingCanvas.colorizeSingleDrawnRectangle(leftPointer, ColorEnum.GREEN.value)
-            self.sortingCanvas.colorizeSingleDrawnRectangle(rightPointer, ColorEnum.GREEN.value)
+            if self.sortingCanvas:
+                self.sortingCanvas.colorizeSingleDrawnRectangle(leftPointer, ColorEnum.GREEN.value)
+                self.sortingCanvas.colorizeSingleDrawnRectangle(rightPointer, ColorEnum.GREEN.value)
 
             # pointers point to numbers smaller / bigger than pivot -> switch
             # thus switch

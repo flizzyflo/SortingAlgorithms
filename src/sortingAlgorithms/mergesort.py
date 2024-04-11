@@ -31,7 +31,6 @@ class MergeSort(AbstractSort):
             # merging elements together, but in place in original array
             self.__merge(unsorted_array, leftIdx, midIndex, rightIdx)
 
-
     def __merge(self, parentArray: List[int | float], leftIndex: int, middleIndex: int, rightIndex: int) -> None:
 
         leftHalf = parentArray[leftIndex:middleIndex + 1]

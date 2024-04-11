@@ -16,12 +16,15 @@ class SelectionSort(AbstractSort):
         while positionToInsertNewMinVal < maxIndex:
             newMinIdx: int = positionToInsertNewMinVal
 
-            self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
+            if self.sortingCanvas:
+                self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
 
             for idxOfNumberToCompare in range(positionToInsertNewMinVal + 1, maxIndex):
-                self.sortingCanvas.colorizeSingleDrawnRectangle(idxOfNumberToCompare - 1, color=ColorEnum.LIGHTBLUE.value)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(positionToInsertNewMinVal, color=ColorEnum.PURPLE.value)
-                self.sortingCanvas.colorizeSingleDrawnRectangle(idxOfNumberToCompare, color=ColorEnum.GREEN.value)
+
+                if self.sortingCanvas:
+                    self.sortingCanvas.colorizeSingleDrawnRectangle(idxOfNumberToCompare - 1, color=ColorEnum.LIGHTBLUE.value)
+                    self.sortingCanvas.colorizeSingleDrawnRectangle(positionToInsertNewMinVal, color=ColorEnum.PURPLE.value)
+                    self.sortingCanvas.colorizeSingleDrawnRectangle(idxOfNumberToCompare, color=ColorEnum.GREEN.value)
 
                 if self.dataToSort[idxOfNumberToCompare] < self.dataToSort[newMinIdx]:
                     newMinIdx = idxOfNumberToCompare
@@ -35,5 +38,6 @@ class SelectionSort(AbstractSort):
 
             positionToInsertNewMinVal += 1
 
-        self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
-        self.sortingCanvas.endSearch(self.dataToSort)
+        if self.sortingCanvas:
+            self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
+            self.sortingCanvas.endSearch(self.dataToSort)
