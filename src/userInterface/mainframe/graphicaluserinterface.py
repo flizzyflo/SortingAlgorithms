@@ -6,7 +6,6 @@ from src.numbergenerator.createrandomnumbers import create_random_numbers
 from src.userInterface.buttons.shufflevaluesbutton import ShuffleValuesButton
 from src.userInterface.canvas.sortingcanvas import SortingCanvas
 from src.userInterface.buttons.startsortbutton import StartSortButton
-from src.userInterface.colors.colorenum import ColorEnum
 from src.userInterface.frames.buttonframe import ButtonFrame
 from src.userInterface.frames.canvasframe import CanvasFrame
 
@@ -37,7 +36,7 @@ class GraphicalUserInterface(tk.Tk):
                                                           width=self.CANVAS_WIDTH,
                                                           height=self.CANVAS_HEIGHT)
 
-        buttonFrame: ButtonFrame = ButtonFrame(master=self, background=backgroundColor, borderwidth=0, border=None)
+        buttonFrame: ButtonFrame = ButtonFrame(master=self, borderwidth=0, border=None)
         buttonFrame.pack(anchor="center", pady=20)
 
         ShuffleValuesButton(buttonFrame, self.sortingCanvas, self.desiredArraySize).grid(row=0, column=0)
