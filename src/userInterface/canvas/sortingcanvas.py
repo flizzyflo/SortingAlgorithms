@@ -47,7 +47,7 @@ class SortingCanvas(tk.Canvas):
             print("Error:", e)
 
         finally:
-            BAR_WIDTH: int = ((self.root.master.getCanvasWidth() - initialStartingPosition) /self.arraySize)
+            BAR_WIDTH: int = ((self.root.master.getCanvasWidth() - initialStartingPosition) / self.arraySize)
 
             x0: float = initialStartingPosition
             maxValue = max(self.dataToSort)
@@ -58,7 +58,8 @@ class SortingCanvas(tk.Canvas):
                 y1: float = BAR_HEIGHT
                 self.rectangles.append(self.create_rectangle(x0, y0, x1, y1,
                                                              tags=rectangleTag,
-                                                             fill=ColorEnum.LIGHTBLUE.value))
+                                                             fill=ColorEnum.WHITE.value,
+                                                             outline=""))
 
                 x0 = x1
 
