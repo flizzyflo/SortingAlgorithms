@@ -80,3 +80,6 @@ class MergeSort(AbstractSort):
             parentArray[parentArrayIdx] = rightHalf[rightHalfIdx]
             rightHalfIdx += 1
             parentArrayIdx += 1
+            if self.sortingCanvas:
+                self.sortingCanvas.colorizeSingleDrawnRectangle(leftHalfIdx, ColorEnum.GREEN.value)
+                self.sortingCanvas.drawRectanglesToCanvas(self.dataToSort)
