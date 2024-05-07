@@ -1,4 +1,3 @@
-import math
 import tkinter as tk
 from typing import List
 
@@ -7,8 +6,7 @@ from src.userInterface.colors.colorenum import ColorEnum
 
 
 BAR_HEIGHT: int = 680
-BAR_GAP: int = 2
-RENDER_DELAY: int = 10
+RENDER_DELAY: int = 1
 RECTANGLE_OBJECT_TAG: str = "rectangles"
 CANVAS_BACKGROUND_COLOR: str = "white"
 
@@ -79,7 +77,7 @@ class SortingCanvas(tk.Canvas):
         self.deleteDrawnRectanglesFromCanvas()
         self.drawRectanglesToCanvas(self.dataToSort)
 
-    def colorizeSingleDrawnRectangle(self, indexNumber: int, color: str = ColorEnum.LIGHTBLUE.value) -> None:
+    def colorizeSingleDrawnRectangle(self, indexNumber: int, color: ColorEnum = ColorEnum.LIGHTBLUE.value) -> None:
 
         """Function to change the color of a rectangle item within the canvas."""
         self.itemconfig(self.rectangles[indexNumber], fill=color)
