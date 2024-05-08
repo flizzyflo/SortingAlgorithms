@@ -16,7 +16,7 @@ GEOMETRY_MEASUREMENT: str = "1400x800"
 def main():
     sortingAlgorithms = [BubbleSort, InsertionSort, SelectionSort, MergeSort, RadixSort, QuickSort, HeapSort, BogoSort]
 
-    window = GraphicalUserInterface(sortingAlgorithms, desiredArraySize=125, backgroundColor=ColorEnum.GREY.value)
+    window = GraphicalUserInterface(sortingAlgorithms, desiredArraySize=350, backgroundColor=ColorEnum.GREY.value)
     window.title(ROOT_TITLE)
     window.geometry(GEOMETRY_MEASUREMENT)
 
